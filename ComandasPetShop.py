@@ -1,45 +1,60 @@
+
+from decimal import Decimal
+
+
 class Servicos:
     def __init__(self, servico, preco):
         self.servico = servico
-        self._preco = preco
-        
+        self._preco = Decimal(str(preco))
+
     @property
     def preco(self):
         return self._preco
-    
+
     @preco.setter
     def preco(self, valor):
+        valor = Decimal(str(valor))
+
         if valor < 0:
             raise ValueError("O preço não pode ser negativo.")
+
         self._preco = valor
 
-    def calcular_total(self, quantidade):
-        return self.preco * quantidade
-    
-servico_solicitado1 = Servicos("Tosa", 50)
-servico_solicitado2 = Servicos("Banho", 70)
+    def calcular_total(self, quantidade, peso):
+        if peso == 9:
+            total = self.preco + Decimal("10.00")
+        elif peso >= 10:
+            total = self.preco + Decimal("15.00")
+        else:
+            total = self.preco
+        return total * quantidade
 
 
-print("Servicos solicitados por cliente:")
-
-print(servico_solicitado1.servico)
-print(servico_solicitado1._preco)
-
-print(servico_solicitado2.servico)
-print(servico_solicitado2._preco)
-
-print("---------------------------------")
+# Catálogo de serviços e preços
+catalogo = {
+    "Banho": Decimal("50.00"),
+    "Tosa": Decimal("80.00"),
+    "Corte de unhas": Decimal("20.00"),
+    "Higienização dos dentes": Decimal("30.00")
+}
 
 
-print("Servicos solicitados por cliente total do valor :")
+# O usuário informa o serviço e a quantidade
+nome = input("Digite o nome do serviço: ").strip().title()
 
+if nome in catalogo:
+    quantidade = int(input("Digite a quantidade: "))
+    kgAnimal = float(input("Qual é o peso do animal?"))
 
-print(servico_solicitado1.servico)
-print(servico_solicitado1.calcular_total(2))
+    servico_solicitado = Servicos(nome, catalogo[nome])
 
-print(servico_solicitado2.servico)
-print(servico_solicitado2.calcular_total(3))
+    total = servico_solicitado.calcular_total(quantidade, kgAnimal)
 
-print("---------------------------------")
+    print("\nServiço solicitado:")
+    print(f"Nome: {servico_solicitado.servico}")
+    print(f"Preço unitário: R$ {servico_solicitado.preco:.2f}")
+    print(f"Quantidade: {quantidade}")
+    print(f"Total: R$ {total:.2f}")
 
-
+else:
+    print("Serviço não encontrado no catálogo.")
