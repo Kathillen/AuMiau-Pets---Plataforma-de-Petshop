@@ -26,6 +26,7 @@ catalogo = {
     "Corte de unhas": Decimal("20.00"),
     "Higienização dos dentes": Decimal("30.00")
 }
+print(catalogo)
 
 nome = input("Digite o nome do serviço: ").strip().title()
 
