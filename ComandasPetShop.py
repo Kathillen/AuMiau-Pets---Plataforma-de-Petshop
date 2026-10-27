@@ -11,15 +11,6 @@ class Servicos:
     def preco(self):
         return self._preco
 
-    @preco.setter
-    def preco(self, valor):
-        valor = Decimal(str(valor))
-
-        if valor < 0:
-            raise ValueError("O preço não pode ser negativo.")
-
-        self._preco = valor
-
     def calcular_total(self, quantidade, peso):
         if peso == 9:
             total = self.preco + Decimal("10.00")
@@ -29,17 +20,13 @@ class Servicos:
             total = self.preco
         return total * quantidade
 
-
-# Catálogo de serviços e preços
 catalogo = {
-    "Banho": Decimal("50.00"),
+    "Banho": Decimal("50.00"), 
     "Tosa": Decimal("80.00"),
     "Corte de unhas": Decimal("20.00"),
     "Higienização dos dentes": Decimal("30.00")
 }
 
-
-# O usuário informa o serviço e a quantidade
 nome = input("Digite o nome do serviço: ").strip().title()
 
 if nome in catalogo:
